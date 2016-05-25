@@ -1,0 +1,30 @@
+.articlelist-component {
+  padding: 40px 80px;
+  .item{
+    margin-bottom:30px;
+    background: #EEF0F3;
+    border-top:4px solid #EEF0F3;
+    padding:10px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all  0.3s;
+    -ms-transition: all  0.3s;
+    -o-transition: all  0.3s;
+    transition: all  0.3s;
+    &:hover{
+      border-top-color: #3E62E0;
+    }
+    .item-link{
+      float: left;
+      width: 180px;
+      height: 145px;
+    }
+    .info-panel{
+      width: 460px;
+      float: left;
+      margin-left:16px;
+      h3{
+        color: #262B38;
+      }
+    }
+  }
+}

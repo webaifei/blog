@@ -1,0 +1,38 @@
+/* Base Application Styles */
+$lightGray: #c5c3c3;
+$gray: #999;
+$blue: #3E62E0;
+body {
+  color:$gray;
+  font-size: 14px;
+}
+img{
+  width:100%;
+}
+input{
+  border:none;
+  outline:none;
+  background: transparent;
+  
+}
+a{
+  color:$gray;
+  text-decoration: none;
+  &:hover{
+    color: $blue;
+  }
+}
+.clearfix{
+  &:after{
+    content: '';
+    display: block;
+    height:0;
+    clear: both;
+  }
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
