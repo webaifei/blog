@@ -1,4 +1,4 @@
-var Post = require('../model/post')
+var Post = require('../../model/post')
 var mk = require('markdown').markdown;
 /**
  * 新增文章操作

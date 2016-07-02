@@ -126,7 +126,7 @@ app.use(route.get('/post/:id', function *(id){
 		})
 	}))
 	.use(route.post('/api/post', function *(){
-		this.body = yield routes.postApi;
+		this.body = yield routes.apiCreatePost;
 
 	}))
 

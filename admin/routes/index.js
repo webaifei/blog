@@ -4,12 +4,11 @@
 var apiFind = require('./api/api.findAllPost')
 var apiUpdatePost = require('./api/api.updatePost.js')
 var apiDeletePost = require('./api/api.deletePost.js')
-var apiLogin = require('./login.route')
-
+var apiLogin = require('./api/api.login.js')
+var apiCreatePost = require('./api/api.createPost.js')
 var post = require('./post.server.js')
 
 
-var postApi = require('./post.api.route')
 var postList = require('./postList.server.js')
 
 
@@ -21,7 +20,7 @@ module.exports = {
   apiLogin: apiLogin,
   apiUpdatePost: apiUpdatePost,
   apiDeletePost: apiDeletePost,
-  postApi: postApi,
+  apiCreatePost: apiCreatePost,
   //apiPost:apiPost,
   apiFind: apiFind
 }

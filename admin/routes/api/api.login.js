@@ -2,7 +2,7 @@
  * 登录api逻辑
  */
 var parse = require('co-body');
-var User = require('../model/user');
+var User = require('../../model/user');
 
 module.exports = function *(next){
 	var body = this.postData;
