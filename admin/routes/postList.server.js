@@ -4,7 +4,6 @@
  */
 var Post = require('../model/post')
 
-
 module.exports = function *(){
 	var params = this.postData||{};
 	var limit = params.limit||10;

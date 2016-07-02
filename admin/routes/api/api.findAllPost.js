@@ -1,14 +1,17 @@
-var Post = require('../model/post')
+/**
+ * 获取
+ */
+var Post = require('../../model/post')
 
 module.exports = function *(){
 	var data = this.postData;
-	
+
 	var query ={}
 	if( data.val && data.type ){
 		query[data.type] = new RegExp(data.val);
-		
+
 		var ret = yield Post.find(query)
-		
+
 		return {
 			code:0,
 			msg: 'ok',

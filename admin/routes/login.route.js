@@ -1,7 +1,10 @@
+/**
+ * 登录api逻辑
+ */
 var parse = require('co-body');
-var User = require('../model/user').User;
+var User = require('../model/user');
 
-exports.login = function *(next){
+module.exports = function *(next){
 	var body = this.postData;
 	var _ret = {};
 	var session = this.session;
@@ -30,8 +33,8 @@ exports.login = function *(next){
 				if( user.length ){
 					session.name = body.name;
 					session.pwd = body.pwd;
-					session.maxAge = 1000*60;
-					
+					session.maxAge = 1000*60*30;
+
 					_ret = {
 						code:0,
 						msg: 'ok',
@@ -49,7 +52,7 @@ exports.login = function *(next){
 			}
 		})
 	}
-	
-	
+
+
 	return _ret;
 }

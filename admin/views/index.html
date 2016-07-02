@@ -5,13 +5,13 @@
 {% block content %}
 
 <div class="container-fluid">
-	
-		
+
+
 		<!-- 主题内容 -->
 		<section class="row">
 			<!-- 侧边栏 -->
 			<aside class="col-lg-3 col-md-3 col-sm-3">
-				
+
 				<ul class="list-group">
 					<li class="list-group-item active">
 						<span class="badge">14</span>
@@ -84,8 +84,8 @@
 									<button class="btn btn-primary unpublish" data-id={{item._id.toString()}}>隐藏</button>
 								{% endif %}
 									<a class="btn btn-primary edit" href={{"/post/"+item._id.toString()}}>编辑</a>
-								
-								
+
+
 								<button class="btn btn-danger delete" data-id={{item._id.toString()}}> 删除</button></td>
 							</tr>
 						{% endfor %}
@@ -116,9 +116,9 @@
 
 		<!-- 底部footer -->
 		<footer>
-			
+
 		</footer>
-	
+
 	</div>
 	<script type="text/javascript" src="/js/moment.js"></script>
 	<script type="text/javascript" src="/js/layer.js"></script>
@@ -127,7 +127,7 @@
 	/**
 	 * 文章操作
 	 */
-	
+
 	$('body').on('click','.publish' ,function (){
 		var that = $(this),
 			id = that.attr('data-id');
@@ -178,24 +178,26 @@
 		var that = $(this),
 			id = that.attr('data-id');
 			utils.confirm({
-				tip:'确定删除这篇文章吗？'
-			})
-			$.ajax({
-				url:'/api/delete',
-				type:'POST',
-				data:{
-					id: id,
-					type: true
-				}
-			}).success(function (res){
-				if(res.code ==0 && res.data){
-					that.parents('tr').remove();
-					utils.msg('删除成功');
-				}else{
-					utils.msg('删除失败',2);
-				}
-			}).error(function (err){
-				utils.alert('网络出错了！')
+				tip:'确定删除这篇文章吗？',
+        sureFn: function (){
+          $.ajax({
+            url:'/api/delete',
+            type:'POST',
+            data:{
+              id: id,
+              type: true
+            }
+          }).success(function (res){
+            if(res.code ==0 && res.data){
+              that.parents('tr').remove();
+              utils.msg('删除成功');
+            }else{
+              utils.msg('删除失败',2);
+            }
+          }).error(function (err){
+            utils.alert('网络出错了！')
+          })
+        }
 			})
 
 	})
@@ -242,7 +244,7 @@
 	/**
 	 * 搜索功能
 	 */
-	
+
 	function Search(){
 		this.searchTypes = [
 			{
@@ -286,7 +288,7 @@
 	/**
 	 * 展示列表
 	 */
-	 
+
 	var listPanel = $('#list-panel');
 
 	function showList (list){
@@ -318,8 +320,8 @@
  博客管理系统后台
 
  1. 为登录的用户 进入登录界面
- 2. 登录用户 展示 操作后台 
+ 2. 登录用户 展示 操作后台
  	* 主要是文章的增删改差
  	* 分类暂时在数据库中进行操作
- 	
+
  -->

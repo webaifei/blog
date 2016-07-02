@@ -11,4 +11,4 @@ AdminUserSchema.pre('save', function (next){
 })
 //选择Users集合
 
-exports.User = mongoose.model('User',AdminUserSchema);
+module.exports = mongoose.model('User',AdminUserSchema);

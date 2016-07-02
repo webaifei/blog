@@ -8,7 +8,7 @@ var utils = {
 /**
  * 提示框函数
  * @param  {string} msg 提示语
- * @return {}     
+ * @return {}
  */
 utils.alert = function (msg){
 	layer.open({
@@ -26,6 +26,7 @@ utils.confirm = function(obj){
 	var cur = layer.confirm(obj.tip, {
 	  btn: ['确定','取消'] //按钮
 	}, function(){
+    obj.sureFn()
 	  layer.close(cur);
 	}, function(){
 	  layer.close(cur);

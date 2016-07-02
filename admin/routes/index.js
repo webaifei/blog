@@ -1,22 +1,27 @@
 /**
- * 路由文件
- * @type {IndexRoute}
+ * 业务逻辑
  */
-var index = require('./index.route')
-var post = require('./post.route.js')
-var apiFind = require('./api.findPost')
-var loginApi = require('./login.route')
+var apiFind = require('./api/api.findAllPost')
+var apiUpdatePost = require('./api/api.updatePost.js')
+var apiDeletePost = require('./api/api.deletePost.js')
+var apiLogin = require('./login.route')
+
+var post = require('./post.server.js')
+
+
 var postApi = require('./post.api.route')
-var postList = require('./postList.route')
-var postAction = require('./api.postAction')
+var postList = require('./postList.server.js')
+
 
 
 module.exports = {
-  index: index,
   post: post,
   postList: postList,
-  loginApi: loginApi,
+  //loginApi: loginApi,
+  apiLogin: apiLogin,
+  apiUpdatePost: apiUpdatePost,
+  apiDeletePost: apiDeletePost,
   postApi: postApi,
-  postAction:postAction,
+  //apiPost:apiPost,
   apiFind: apiFind
 }

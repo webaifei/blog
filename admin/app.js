@@ -19,8 +19,8 @@ var route = require('koa-route');
 var compress = require('koa-compress')
 var views = require('co-views');
 var parse = require('co-body');
-var routes = require('./routes/index')
 
+var routes = require('./routes/index')
 var connection = require('./db/index')
 
 // 分类
@@ -67,10 +67,8 @@ app.use(logger())
 app.use(session(app))
 // post请求的都使用 body-parse 放到postData对象上
 app.use(function*(next){
-	
 	if( this.method.toLowerCase() == 'post' ){
 		this.postData = yield parse(this, {limit: '4mb'});
-		
 	}
 	yield next;
 })
@@ -87,32 +85,25 @@ app.use(route.get('/admin', function*() {
 	}))
 // 登录页
 app.use(route.get('/login', function*(){
-	var session = this.session||{};
-	if( session.name && session.pwd ){
-		this.redirect('/admin');
-	}else{
-		this.body = yield render('login', {
-			title:"管理员登录页"
-		})	
-
-
-	}
-	// this.body = yield render('login', {
-	// 		title:"管理员登录页"
-	// 	})	
-	
-}))
-
-// 登录接口
-app.use(route.post('/login', function*(){
-	this.body = yield routes.loginApi.login;
-}))
+    var session = this.session||{};
+    if( session.name && session.pwd ){
+      this.redirect('/admin');
+    }else{
+      this.body = yield render('login', {
+        title:"管理员登录页"
+      })
+    }
+  }))
+  // 登录api
+  .use(route.post('/login', function*(){
+    this.body = yield routes.apiLogin;
+  }))
 //发布和隐藏
 app.use(route.post('/api/publish', function *(){
-	this.body = yield routes.postAction.update;
+	this.body = yield routes.apiUpdatePost;
 }))
 app.use(route.post('/api/delete', function *(){
-	this.body = yield routes.postAction.delete;
+	this.body = yield routes.apiDeletePost;
 }))
 
 app.use(route.post('/api/getPost', function *(){
@@ -121,7 +112,7 @@ app.use(route.post('/api/getPost', function *(){
 // 新增 编辑页面
 app.use(route.get('/post/:id', function *(id){
 		var post = yield routes.post( id )
-		
+
 		this.body = yield render('post',{
 			title:'编辑文章',
 			post: post,
@@ -130,12 +121,13 @@ app.use(route.get('/post/:id', function *(id){
 	}))
 	.use(route.get('/post', function *(){
 		this.body = yield render('post', {
-			title:'新增文章'
+			title:'新增文章',
+      tagsCol: tagsCol
 		})
 	}))
 	.use(route.post('/api/post', function *(){
 		this.body = yield routes.postApi;
-		
+
 	}))
 
 app.listen(port);
