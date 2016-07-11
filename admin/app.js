@@ -2,7 +2,7 @@
  * 项目的入口程序
  * @type {*|number}
  */
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 80;
 var config = require('./config');
 
 //加载依赖

@@ -14,7 +14,7 @@ var config = {
 config.db = {
   dbName:'admin',
   host:'127.0.0.1:27017',
-  user:'root',
+  user:'ngnice',
   pwd:'137853'
 }
 //导出模块
