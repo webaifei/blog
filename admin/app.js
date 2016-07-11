@@ -88,14 +88,14 @@ app.use(function*(next){
 })
 //静态资源
 app.use(require('koa-static')(config.publicPath))
-app.use(require('koa-static')('dist'))
+app.use(require('koa-static')('client'))
 
 
 // 前台首页入口
 app.use(route.get('/', function *(){
   //var appHtml = renderToString(<App/>);
 
-  var html = fs.readFileSync('./dist/index.html');
+  var html = fs.readFileSync('./client/index.html');
   console.log(html)
   this.set('Content-Type', 'text/html')
   this.body = html;
