@@ -1,8 +1,14 @@
 var mongoose = require('mongoose');
 
 var AdminUserSchema = mongoose.Schema({
-	name:String,
-	pwd: String
+	name:{
+    type: String,
+    required: true
+  },
+	pwd: {
+    type: String,
+    required: true
+  }
 })
 
 AdminUserSchema.pre('save', function (next){

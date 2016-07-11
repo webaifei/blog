@@ -8,7 +8,7 @@ var config = {
   root: root,
   publicPath: path.join(root, 'public'),
   viewPath: path.join(root, 'views'),
-  routePath: path.join(root, 'routes')
+  routePath: path.join(root, 'controllers')
 };
 //数据库访问配置
 config.db = {

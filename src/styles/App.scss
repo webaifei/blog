@@ -2,9 +2,33 @@
 $lightGray: #c5c3c3;
 $gray: #999;
 $blue: #3E62E0;
+
+$fontSize:12px , 14px , 16px, 18px;
+
+@mixin ellipsis($row: 1){
+  text-overflow: ellipsis ;
+  overflow:hidden;
+
+  -webkit-line-clamp: $row;
+  @if $row == 1{
+    display: inline-block;
+  }@else{
+    display: -webkit-box;
+  }
+  -webkit-box-orient: vertical;
+}
 body {
+  margin:0;
   color:$gray;
   font-size: 14px;
+  background: #fff9f5;
+}
+*{
+  margin:0;
+  padding:0;
+}
+h1, h2, h3, h4{
+  font-weight:normal;
 }
 img{
   width:100%;
@@ -13,7 +37,7 @@ input{
   border:none;
   outline:none;
   background: transparent;
-  
+
 }
 a{
   color:$gray;
@@ -30,9 +54,29 @@ a{
     clear: both;
   }
 }
+.ellipsis{
+  @include ellipsis();
+
+}
+.ellipsis2{
+  @include ellipsis(2);
+}
+li {
+  list-style: none;
+}
 .fl{
   float: left;
 }
 .fr{
   float: right;
+}
+
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+td,
+th {
+  padding: 0;
 }

@@ -1,3 +1,6 @@
+/**
+ * 数据库连接操作
+ */
 var mongoose = require('mongoose');
 var log = require('../utils/index').log;
 var db = require('../config.js').db;
@@ -15,7 +18,7 @@ connection.on('error', function (info){
 })
 connection.on('open', function (){
 	log('connect db successfully!')
-	
+
 })
 mongoose.connect(url);
 

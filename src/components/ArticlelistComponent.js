@@ -1,45 +1,36 @@
 'use strict';
 
 import React from 'react';
-
+import moment from 'moment'
 require('styles//Articlelist.scss');
 
 class ArticlelistComponent extends React.Component {
+  constructor(props){
+    super(props)
+  }
+  linkDetail(id){
+    location.hash = `detail/${id}`;
+  }
   render() {
+    var list = this.props.list||[];
+    var that = this;
+    console.log( list, 'inner ')
     return (
-      <div className="articlelist-component">
-        <div className="item clearfix">
-          <img className="item-link" src='../images/item-img.jpg' alt=""/>
-          <div className="info-panel">
-            <h3>我的前端入门之路</h3>
-            <p>这里是描述</p>
-            <p>2014-01-01</p>
-          </div>
-        </div>
-        <div className="item clearfix">
-          <img className="item-link" src='../images/item-img.jpg' alt=""/>
-          <div className="info-panel">
-            <h3>我的前端入门之路</h3>
-            <p>这里是描述</p>
-            <p>2014-01-01</p>
-          </div>
-        </div>
-        <div className="item clearfix">
-          <img className="item-link" src='../images/item-img.jpg' alt=""/>
-          <div className="info-panel">
-            <h3>我的前端入门之路</h3>
-            <p>这里是描述</p>
-            <p>2014-01-01</p>
-          </div>
-        </div>
-        <div className="item clearfix">
-          <img className="item-link" src='../images/item-img.jpg' alt=""/>
-          <div className="info-panel">
-            <h3>我的前端入门之路</h3>
-            <p>这里是描述</p>
-            <p>2014-01-01</p>
-          </div>
-        </div>
+      <div className="articlelist-component fl">
+        <div className="title">最新文章列表</div>
+        {
+          list.map(function (item, index){
+            return (
+              <div className="item clearfix" key={item._id}>
+
+                <div className="info-panel" onClick={that.linkDetail.bind(that, item._id)}>
+                  <h3>{item.title}</h3>
+                  <p>{moment(item.updateTime).format('h:m YY-M-D')}</p>
+                </div>
+              </div>
+            )
+          })
+        }
       </div>
     );
   }

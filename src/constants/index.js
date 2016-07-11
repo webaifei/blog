@@ -1,0 +1,6 @@
+const consts = {
+  GET_ARTICLES_BY_DATE:'GET_ARTICLES_BY_DATE',
+  GET_ARTICLES_BY_READING:'GET_ARTICLES_BY_READING',
+  SET_DETAIL: 'SET_DETAIL'
+}
+module.exports = consts;

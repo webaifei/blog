@@ -9,9 +9,12 @@ var config = require('./config');
 var path = require('path'),
 	resolve = path.resolve,
 	join = path.join;
+var fs = require('fs');
 var koa = require('koa');
+//var renderToString = require('react-dom/server').renderToString;
+var marked = require('marked')
 // 日志
-var logger = require('koa-logger');
+var logger = require('koa-json-logger');
 // session
 var session = require('koa-session');
 
@@ -20,8 +23,10 @@ var compress = require('koa-compress')
 var views = require('co-views');
 var parse = require('co-body');
 
-var routes = require('./routes/index')
+var routes = require('./controllers/index')
 var connection = require('./db/index')
+
+
 
 // 分类
 var tagsCol = {
@@ -56,14 +61,23 @@ var render = views(config.viewPath, {
 			html: 'swig'
 		}
 	})
-	//var routes = require('./routes/index')
+	//var controllers = require('./controllers/index')
 
 var app = new koa();
 // 应该是使用这个给每一个key加密用的
 app.keys = ['some secret hurr'];
 // 压缩响应？？
 app.use(compress())
-app.use(logger())
+app.use(function*(next){
+  this.set('Access-Control-Allow-Origin', '*');
+  this.set('Access-Control-Allow-Methods', '*');
+  //this.set("Access-Control-Allow-Headers", "Content-Type")
+  yield next;
+})
+app.use(logger({
+  name: 'site',
+  path: './logs'
+}))
 app.use(session(app))
 // post请求的都使用 body-parse 放到postData对象上
 app.use(function*(next){
@@ -74,14 +88,29 @@ app.use(function*(next){
 })
 //静态资源
 app.use(require('koa-static')(config.publicPath))
+app.use(require('koa-static')('dist'))
 
+
+// 前台首页入口
+app.use(route.get('/', function *(){
+  //var appHtml = renderToString(<App/>);
+
+  var html = fs.readFileSync('./dist/index.html');
+  console.log(html)
+  this.set('Content-Type', 'text/html')
+  this.body = html;
+}));
 // 首页
 app.use(route.get('/admin', function*() {
 		var list = yield routes.postList;
+    tagsCol = yield routes.tagsCount;
 		this.body = yield render('index', {
 			title: '管理后台首页',
-			users: list
+			users: list,
+      tags:tagsCol
+
 		})
+  // this.body = tagsCol
 	}))
 // 登录页
 app.use(route.get('/login', function*(){
@@ -108,11 +137,18 @@ app.use(route.post('/api/delete', function *(){
 
 app.use(route.post('/api/getPost', function *(){
 	this.body = yield routes.apiFind
+})).use(route.post('/api/getPostByTag', function *(){
+  this.body = yield routes.apiFindByTag
+})).use(route.post('/api/getArticles', function *(){
+  this.body = yield routes.getArticles;
 }))
+  .use(route.post('/api/getArticleDetail', function *(){
+    this.body = yield routes.getArticleDetail;
+  }))
 // 新增 编辑页面
 app.use(route.get('/post/:id', function *(id){
 		var post = yield routes.post( id )
-
+    //post.content = marked(post.content)
 		this.body = yield render('post',{
 			title:'编辑文章',
 			post: post,

@@ -13,26 +13,12 @@
 			<aside class="col-lg-3 col-md-3 col-sm-3">
 
 				<ul class="list-group">
-					<li class="list-group-item active">
-						<span class="badge">14</span>
-						all
-					</li>
-					<li class="list-group-item ">
-						<span class="badge">14</span>
-						html
-					</li>
-					<li class="list-group-item">
-						<span class="badge">14</span>
-						css
-					</li>
-					<li class="list-group-item">
-						<span class="badge">14</span>
-						javascript
-					</li>
-					<li class="list-group-item">
-						<span class="badge">14</span>
-						html
-					</li>
+          {% for item in tags %}
+            <li class="list-group-item " tag={{item.tag}}>
+              <span class="badge">{{item.count}}</span>
+              {{ item.name }}
+            </li>
+          {% endfor %}
 				</ul>
 
 			</aside>
@@ -127,7 +113,6 @@
 	/**
 	 * 文章操作
 	 */
-
 	$('body').on('click','.publish' ,function (){
 		var that = $(this),
 			id = that.attr('data-id');
@@ -241,6 +226,36 @@
 				utils.alert('输入搜索的字段');
 			}
 	})
+  $('.list-group-item').on('click', function (){
+    var _this = $(this),
+        _tag = _this.attr('tag');
+    _this.toggleClass('active').siblings().removeClass('active')
+    searchByTag(_tag)
+  })
+  /**
+   * 按照不同的类别展示文章
+   */
+
+  function searchByTag(tag){
+    $.ajax({
+      url:'/api/getPostByTag',
+      type:'POST',
+      dataType:'json',
+      data:{
+        tag: tag
+      },
+      success: function (res){
+        if( !res.code ){
+          showList(res.data)
+        }else {
+          utils.msg(res.msg, 2);
+        }
+      },
+      error: function (err){
+        utils.msg('出错了!', 2)
+      }
+    })
+  }
 	/**
 	 * 搜索功能
 	 */
@@ -252,7 +267,7 @@
 				name:'标题'
 			},
 			{
-				tag:'anchor',
+				tag:'author',
 				name:'作者'
 			}
 		];
