@@ -74,10 +74,12 @@ app.use(function*(next){
   //this.set("Access-Control-Allow-Headers", "Content-Type")
   yield next;
 })
+/*
 app.use(logger({
   name: 'site',
   path: './logs'
 }))
+*/
 app.use(session(app))
 // post请求的都使用 body-parse 放到postData对象上
 app.use(function*(next){
@@ -88,14 +90,14 @@ app.use(function*(next){
 })
 //静态资源
 app.use(require('koa-static')(config.publicPath))
-app.use(require('koa-static')('client'))
+app.use(require('koa-static')(path.join(__dirname,'client')))
 
 
 // 前台首页入口
 app.use(route.get('/', function *(){
   //var appHtml = renderToString(<App/>);
 
-  var html = fs.readFileSync('./client/index.html');
+  var html = fs.readFileSync(path.join(__dirname,'./client/index.html'));
   console.log(html)
   this.set('Content-Type', 'text/html')
   this.body = html;
@@ -162,6 +164,7 @@ app.use(route.get('/post/:id', function *(id){
 		})
 	}))
 	.use(route.post('/api/post', function *(){
+		
 		this.body = yield routes.apiCreatePost;
 
 	}))

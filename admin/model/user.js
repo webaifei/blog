@@ -6,7 +6,7 @@ var AdminUserSchema = mongoose.Schema({
     required: true
   },
 	pwd: {
-    type: String,
+    type: Number,
     required: true
   }
 })
@@ -17,4 +17,4 @@ AdminUserSchema.pre('save', function (next){
 })
 //选择Users集合
 
-module.exports = mongoose.model('User',AdminUserSchema);
+module.exports = mongoose.model('users',AdminUserSchema);

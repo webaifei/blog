@@ -30,10 +30,13 @@ module.exports = function *(){
 	}else{
 		//body.content = mk.toHTML(body.content);
 		//更新数据
+		
 		if(body._id){
+			var _id = body._id;
 			body.updateTime = Date.now();
-			var post = yield Post.findOneAndUpdate({_id: body._id}, body);
-			console.log( post, 'ii')
+			delete body._id;
+			var post = yield Post.findOneAndUpdate({_id: _id},{$set:body});
+			//console.log( post, 'ii')
 			if(post._id){
 				_ret = {
 					code: 0,

@@ -1,6 +1,8 @@
 'use strict';
 
 const path = require('path');
+//获取命令后面的参数  
+//e.g. node app.js -env dev
 const args = require('minimist')(process.argv.slice(2));
 
 // List of allowed environments
@@ -15,6 +17,8 @@ if (args._.length > 0 && args._.indexOf('start') !== -1) {
 } else {
   env = 'dev';
 }
+//手动的设置process.env变量
+//
 process.env.REACT_WEBPACK_ENV = env;
 
 /**

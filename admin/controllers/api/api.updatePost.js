@@ -20,7 +20,7 @@ module.exports = function *(){
     }
   }else{
     var res = yield Post.findOneAndUpdate({_id: params.id}, {$set:{ hidden: params.type }});
-
+    console.log(res, '===>')
     if(res._id){
       return {
         code: 0,

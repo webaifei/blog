@@ -6,8 +6,10 @@ var User = require('../../model/user');
 
 module.exports = function *(next){
 	var body = this.postData;
+	body.pwd = +body.pwd;
 	var _ret = {};
 	var session = this.session;
+	
 	if( body.name=='' ){
 		_ret = {
 			code: 1,
@@ -23,6 +25,7 @@ module.exports = function *(next){
 		}
 	}else{
 		yield User.find(body, function (err, user){
+			//console.log(arguments, '====')
 			if( err ){
 				_ret = {
 					code: 1,
@@ -30,6 +33,7 @@ module.exports = function *(next){
 					data:{}
 				}
 			}else{
+				//console.log(user)
 				if( user.length ){
 					session.name = body.name;
 					session.pwd = body.pwd;
